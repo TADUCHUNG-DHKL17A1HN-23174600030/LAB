@@ -1,18 +1,19 @@
-import pandas as pd
 import numpy as np
+import csv
 
 # Đọc dữ liệu từ file CSV
-df = pd.read_csv('Data\diem_hoc_phan.csv')
+efficiency_data = []
+with open('Data/diem_hoc_phan.csv', 'r') as file:
+    reader = csv.reader(file)
+    header = next(reader)  # Bỏ qua dòng header
+    for row in reader:
+        efficiency_data.append(row[2:5])  # Chỉ lấy dữ liệu điểm của HP1, HP2, HP3
 
-# Hiển thị dữ liệu để kiểm tra
-print("Dữ liệu từ file CSV:")
-print(df)
-
-# Chuyển đổi dữ liệu điểm (các cột HP1, HP2, HP3) thành mảng NumPy
-diem_hp = df[['HP 1', 'HP 2', 'HP 3']].to_numpy()
+# Chuyển đổi dữ liệu điểm thành mảng NumPy
+diem_hp = np.array(efficiency_data, dtype=float)
 
 # Hiển thị mảng NumPy
-print("\nDữ liệu điểm số dưới dạng mảng NumPy:")
+print("Dữ liệu điểm số dưới dạng mảng NumPy:")
 print(diem_hp)
 
 def qui_doi_diem(diem):
@@ -80,4 +81,3 @@ counter = Counter(flat_diem_tinchi)
 print("\nSố lượng sinh viên đạt mỗi loại điểm chữ:")
 for grade, count in counter.items():
     print(f"{grade}: {count}")
-
